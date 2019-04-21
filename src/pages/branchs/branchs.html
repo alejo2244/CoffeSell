@@ -1,0 +1,31 @@
+<!--
+  Generated template for the BranchsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Sucursales</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addBranch()" large color="light">
+        <ion-icon name="ios-add-circle-outline"></ion-icon>
+        &nbsp;Crear
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let branch of branchs">
+      <div (click)="itemSelected(branch)">
+        <h2>{{ branch.nameBranch | uppercase }}</h2>
+        <p>{{ branch.addressBranch }} ID: {{ branch.branchId }}</p>
+      </div>        
+      <button ion-button color="light" clear icon-only item-end (click)="deleteBranch(usbrancher)">
+          <ion-icon name="trash" is-active="false"></ion-icon>
+        </button>
+    </ion-item>
+  </ion-list>
+</ion-content>

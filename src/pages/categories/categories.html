@@ -1,0 +1,32 @@
+<!--
+  Generated template for the CategoriesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Categorias de Producto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item-sliding *ngFor="let category of categories">
+          <ion-item (click)="itemSelected(category)">
+              <h2>{{ category.nameCategories | uppercase }}</h2>
+              <p>{{ category.categoriesId }}</p>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button color="red" (click)="deleteCategory(category)">
+              <ion-icon name="ios-close-circle-outline"></ion-icon>
+              Delete
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+  
+    <ion-fab bottom right>
+      <button ion-fab (click)="addCategory()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>

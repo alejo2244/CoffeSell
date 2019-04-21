@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <table>
+      <tr>
+        <td>
+          <img src="../../assets/imgs/logo.png" width="80px" style="display:inline-block" height="80px">
+        </td>
+        <td>
+          <ion-title>Ingresar</ion-title>
+        </td>
+      </tr>
+    </table>    
+    <ion-buttons end *ngIf="indexCount == 0">
+      <button ion-button (click)="dismiss()">
+        Cancelar
+      </button>
+    </ion-buttons>
+    <ion-buttons end *ngIf="indexCount == 1">
+        <button ion-button icon-only (click)="LogOut()">
+          <ion-icon name="md-power"></ion-icon>
+          &nbsp;Salir
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding *ngIf="indexCount == 0">
+
+    <ion-img class="imgLogin" src="../../assets/imgs/Buttons/inicio.png"></ion-img>
+
+    <ion-item>
+        <ion-label floating>Usuario</ion-label>
+        <ion-input type="text" [(ngModel)]="user.userName"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label floating>Clave</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+<br/>
+<br/>
+<br/>
+<br/>
+    <button ion-button block  outline (click)="LogIn()">
+        Ingresar
+      </button>
+</ion-content>
+<ion-content padding *ngIf="indexCount == 1">
+  <table class="menu">
+    <tr>
+      <td>
+          <button id="btn_branch" (click)="RedirectBranchs()"></button> 
+      </td>
+      <td>
+          <button id="btn_user" (click)="RedirectUsers()"></button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+          <button id="btn_category" (click)="RedirectCategories()"></button> 
+      </td>
+      <td>
+        <button id="btn_product" (click)="RedirectProduct()"></button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center">
+        <button id="btn_order" (click)="RedirectOrders()"></button>
+      </td>
+    </tr>
+  </table>
+</ion-content>

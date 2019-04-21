@@ -1,0 +1,7 @@
+{
+  "name": "CoffeSell",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

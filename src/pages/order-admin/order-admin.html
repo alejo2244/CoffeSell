@@ -1,0 +1,45 @@
+<!--
+  Generated template for the OrderAdminPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Gestionar Pedidos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item-group *ngFor="let prod of orders" full>
+        <ion-item-divider color="light">{{ prod.id | uppercase }}</ion-item-divider>
+      <ion-list>
+        <ion-item-sliding *ngFor="let product of prod.products">
+          <ion-item>
+              <ion-avatar item-start>
+                <img src="{{ product.url }}">
+              </ion-avatar>
+            <h2>{{ product.name | uppercase }}</h2>
+            <p> Cantidad: {{ product.quantity }} </p>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button color="red">
+              <ion-icon name="ios-close-circle-outline"></ion-icon>
+              Delete
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+      </ion-item-group>
+      
+  <ion-footer>
+    <ion-toolbar>
+      <ion-item>
+        <ion-label stacked>Sucursal</ion-label>
+        <ion-select [(ngModel)]="branchSelect"  okText="Aceptar" cancelText="Cancelar">
+          <ion-option *ngFor="let branch of branchs" value="{{ branch._id }}">{{ branch.nameBranch }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
