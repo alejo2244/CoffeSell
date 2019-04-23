@@ -3,6 +3,7 @@ import { ToastController, LoadingController, ModalController, NavController, Nav
 import { BranchDetailPage } from '../branch-detail/branch-detail';
 import { CreateBranchPage } from '../create-branch/create-branch';
 import { ServerProvider } from '../../providers/server/server';
+import { LogInPage } from '../log-in/log-in';
 
 /**
  * Generated class for the BranchsPage page.
@@ -32,7 +33,7 @@ export class BranchsPage {
     console.log('ionViewDidLoad BranchsPage');
     this.getBranchs();
     this.navBar.backButtonClick = (e:UIEvent)=>{
-      this.navCtrl.push(BranchsPage);
+      this.navCtrl.push(LogInPage);
      }
   }
 

@@ -151,7 +151,8 @@ export class ServerProvider {
       "name": productData.name,
       "description": productData.description,
       "quantity": productData.quantity,
-      "url": productData.url
+      "url": productData.url,
+      "category": productData.categoriesId
     }
     return this.executeService("patch", "products", parameters, productData.productId);
   }
@@ -192,6 +193,20 @@ export class ServerProvider {
 
   getRoles() {
     return this.executeService("get", "roles", null, 0);
+  }
+
+
+  //-------------------- NOTIFICACIONES -----------------------//
+  
+  CreateNotification(title, message) {
+    let parameters = {
+      "app_id": "d0435b6e-cf21-41b9-99ac-1664d6c187d6",
+      "include_player_ids": ["89082861-41ca-4427-b352-6ed9278f35ba"],
+      "data": {"foo": "bar"},
+      "headings" : { "en": title },
+      "contents": {"en": message }
+    }
+    return new Promise((resolve, reject) => { this.http.post("https://onesignal.com/api/v1/notifications", parameters).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });      
   }
 
 }

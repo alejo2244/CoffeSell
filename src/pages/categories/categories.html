@@ -7,26 +7,25 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Categorias de Producto</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addCategory()" large color="light">
+        <ion-icon name="ios-add-circle-outline"></ion-icon>
+        &nbsp;Crear
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
     <ion-list>
-        <ion-item-sliding *ngFor="let category of categories">
-          <ion-item (click)="itemSelected(category)">
-              <h2>{{ category.nameCategories | uppercase }}</h2>
-              <p>{{ category.categoriesId }}</p>
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button color="red" (click)="deleteCategory(category)">
-              <ion-icon name="ios-close-circle-outline"></ion-icon>
-              Delete
-            </button>
-          </ion-item-options>
-        </ion-item-sliding>
+      <ion-item *ngFor="let category of categories">
+        <div (click)="itemSelected(category)">
+          <h2>{{ category.nameCategories | uppercase }}</h2>
+          <p>{{ category.categoriesId }}</p>
+        </div>
+        <button ion-button color="light" clear icon-only item-end (click)="deleteCategory(category)">
+          <ion-icon name="trash" is-active="false"></ion-icon>
+        </button>
+      </ion-item>
     </ion-list>
-  
-    <ion-fab bottom right>
-      <button ion-fab (click)="addCategory()"><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
 </ion-content>

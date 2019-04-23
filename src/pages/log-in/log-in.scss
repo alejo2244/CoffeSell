@@ -45,11 +45,16 @@
 }
 
 .imgLogin{
-    align:center;
     width: 80px; 
     height: 100px; 
     background: transparent;
-    display: block;
     background-position: center center;
     background-repeat: no-repeat;
 }
+
+.passwordIcon{
+    font-size:2rem !important;
+    position: relative !important;
+    top: 22px !important;
+    margin: 0 auto !important;
+ }

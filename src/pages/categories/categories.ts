@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, Navbar } from 'ionic-angular';
 import { ServerProvider } from '../../providers/server/server';
 import { CategoryDetailPage } from '../category-detail/category-detail';
 import { CreateCategoryPage } from '../create-category/create-category';
+import { LogInPage } from '../log-in/log-in';
 
 /**
  * Generated class for the CategoriesPage page.
@@ -17,6 +18,7 @@ import { CreateCategoryPage } from '../create-category/create-category';
 })
 export class CategoriesPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
   categories: any[] = [];
   constructor(public provider:ServerProvider,
     public loadingCtrl: LoadingController, 
@@ -30,6 +32,9 @@ export class CategoriesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CategoriesPage');
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.navCtrl.push(LogInPage);
+     }
   }
 
   getCategories()

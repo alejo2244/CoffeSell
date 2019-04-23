@@ -48,12 +48,11 @@ export class OrdersPage {
     },
     error => {
       const toast = this.toast.create({
-        message: JSON.stringify(error),
+        message: JSON.parse(error).error.description,
         duration: 3000
       });
       toast.present();
       loader.dismiss();
-      console.log(error);
     });
   }
 
@@ -108,6 +107,53 @@ export class OrdersPage {
     const modal = this.modalCtrl.create(LogInPage);
     modal.present();
   }
-
-
+  
+  notification()
+  {
+      const prompt = this.alertCtrl.create({
+        title: 'Notificacion',
+        message: "Cuantos quiere agregar al pedido?",
+        inputs: [
+          {
+            name: 'Titulo',
+            placeholder: 'Titulo',
+            type: "text"
+          },
+          {
+            name: 'Mensaje',
+            placeholder: 'Mensaje',
+            type: "text"
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Guardar',
+            handler: data => {
+              this.provider.CreateNotification(data.Titulo, data.Mensaje).then(res => {
+                const toast = this.toast.create({
+                  message: "NotifEnviadas: " + JSON.parse(JSON.stringify(res)).recipients,
+                  duration: 3000,
+                  position: "top"
+                });
+                toast.present();
+              },
+              error => {
+                const toast = this.toast.create({
+                  message: JSON.stringify(error),
+                  duration: 3000
+                });
+                toast.present();
+              });              
+            }
+          }
+        ]
+      });
+      prompt.present();
+  }
 }

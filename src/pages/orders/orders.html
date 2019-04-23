@@ -25,29 +25,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-item-group *ngFor="let prod of groupProducts" full>
-    <ion-item-divider class="divider">{{ prod.id | uppercase }}</ion-item-divider>
+<ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let product of prod.products">
-      <ion-item (click)="itemSelected(product)">
-          <ion-avatar item-start>
-            <img src="{{ product.url }}">
-          </ion-avatar>
-        <h2>{{ product.name | uppercase }}</h2>
-        <p>{{ product.description }} - Cantidad: {{ product.quantity }} </p>
-      </ion-item>
-      <ion-item-options side="left">
-        <button ion-button color="green" (click)="add(product)">
-          <ion-icon name="add-circle"></ion-icon>
-          Agregar
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-  </ion-item-group>
-<!--   
+      <ion-item-group *ngFor="let prod of groupProducts" full>
+        <ion-item-divider class="divider">{{ prod.id | uppercase }}</ion-item-divider>
+        <ion-grid>
+            <ion-row>
+              <ion-col col-6 col-md-4 *ngFor="let product of prod.products">
+                <ion-card>
+                  <div (click)="itemSelected(product)">
+                  <img src="http://drive.google.com/uc?export=view&id=1RCWP1ke6Tp5U9KUlr-qqtreGGEGROB6V" />
+                  <ion-card-content>
+                    <ion-card-title color="light">
+                      {{ product.name }}
+                    </ion-card-title>
+                    <p style="color: #FFFFFF">
+                      {{ product.description }}
+                    </p>
+                  </ion-card-content>
+                  </div>
+                  <ion-item>
+                    <ion-icon name='logo-usd' item-start style="color: #00ff37"></ion-icon>
+                    {{ product.price }}
+                    <ion-badge item-end (click)="add(product)">+</ion-badge>
+                  </ion-item>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-item-group>
+    </ion-list>
+
+    
   <ion-fab bottom right>
-      <button ion-fab (click)="viewOrder()"><ion-icon name="md-basket"></ion-icon></button>
-    </ion-fab> -->
+    <button ion-fab (click)="notification()"><ion-icon name="notifications"></ion-icon></button>
+  </ion-fab>
 </ion-content>

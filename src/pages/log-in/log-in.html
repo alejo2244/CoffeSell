@@ -2,8 +2,8 @@
   <ion-navbar hideBackButton="true">
     <table>
       <tr>
-        <td>
-          <img src="../../assets/imgs/logo.png" width="80px" style="display:inline-block" height="80px">
+        <td center>
+          <img src="../../assets/imgs/logo.png" width="80px" style="display:inline-block;" height="80px">
         </td>
         <td>
           <ion-title>Ingresar</ion-title>
@@ -25,7 +25,9 @@
 </ion-header>
 <ion-content padding *ngIf="indexCount == 0">
 
+  <div style="width: 100%; text-align: center;">
     <ion-img class="imgLogin" src="../../assets/imgs/Buttons/inicio.png"></ion-img>
+  </div>
 
     <ion-item>
         <ion-label floating>Usuario</ion-label>
@@ -34,13 +36,14 @@
     
       <ion-item>
         <ion-label floating>Clave</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+        <ion-input [(ngModel)]="user.password" [type]="passwordType" clearOnEdit="false"></ion-input>
+        <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
     </ion-item>
 <br/>
 <br/>
 <br/>
 <br/>
-    <button ion-button block  outline (click)="LogIn()">
+    <button ion-button block (click)="LogIn()">
         Ingresar
       </button>
 </ion-content>

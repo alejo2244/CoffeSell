@@ -1,5 +1,5 @@
-import { Component, Injectable } from '@angular/core';
-import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Component, Injectable, ViewChild } from '@angular/core';
+import { AlertController, LoadingController, ModalController, NavController, NavParams, ToastController, Navbar } from 'ionic-angular';
 import { UserDetailPage } from '../user-detail/user-detail';
 import { CreateUserPage } from '../create-user/create-user';
 import { ServerProvider } from '../../providers/server/server';
@@ -18,6 +18,8 @@ import { LogInPage } from '../log-in/log-in';
 })
 @Injectable()
 export class UsersPage {
+  
+  @ViewChild(Navbar) navBar: Navbar;
   users: any[] = [];
   constructor(public provider:ServerProvider,
               public loadingCtrl: LoadingController, 
@@ -31,6 +33,9 @@ export class UsersPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UsersPage');
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.navCtrl.push(LogInPage);
+     }
   }
 
   getUsers(){

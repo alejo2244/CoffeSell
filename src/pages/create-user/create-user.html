@@ -23,7 +23,8 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Clave</ion-label>
-      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      <ion-input [(ngModel)]="user.password" [type]="passwordType" clearOnEdit="false"></ion-input>
+      <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
     </ion-item>
     <ion-item>
       <ion-label floating>Rol</ion-label>

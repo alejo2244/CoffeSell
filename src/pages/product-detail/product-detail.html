@@ -18,24 +18,28 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label stacked>Nombre</ion-label>
+      <ion-label floating>Nombre</ion-label>
       <ion-input type="text" [(ngModel)]="product.name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Descripcion</ion-label>
+      <ion-label floating>Descripcion</ion-label>
       <ion-input type="text" [(ngModel)]="product.description"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Cantidad</ion-label>
+      <ion-label floating>Cantidad</ion-label>
       <ion-input type="number" min="1" max="500" [(ngModel)]="product.quantity"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>url</ion-label>
+      <ion-label floating>url</ion-label>
       <ion-input type="text" [(ngModel)]="product.url"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Categoria</ion-label>
-      <ion-select [(ngModel)]="product.category"  okText="Aceptar" cancelText="Cancelar">
+      <ion-label floating>Precio</ion-label>
+      <ion-input type="number" min="1" max="50000" [(ngModel)]="product.price"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Categoria</ion-label>
+      <ion-select [(ngModel)]="product.categoriesId" okText="Aceptar" cancelText="Cancelar">
         <ion-option *ngFor="let category of categories" value="{{ category.categoriesId }}">{{ category.nameCategories }}</ion-option>
       </ion-select>
     </ion-item>

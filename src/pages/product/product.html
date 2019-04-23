@@ -7,6 +7,12 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Productos</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addProduct()" large color="light">
+        <ion-icon name="ios-add-circle-outline"></ion-icon>
+        &nbsp;Crear
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -14,25 +20,18 @@
     <ion-item-group *ngFor="let prod of groupProducts" full>
       <ion-item-divider color="light">{{ prod.id | uppercase }}</ion-item-divider>
     <ion-list>
-      <ion-item-sliding *ngFor="let product of prod.products">
-        <ion-item (click)="itemSelected(product)">
+        <ion-item *ngFor="let product of prod.products">
             <ion-avatar item-start>
               <img src="{{ product.url }}">
             </ion-avatar>
-          <h2>{{ product.name | uppercase }}</h2>
-          <p>{{ product.description }} - Cantidad: {{ product.quantity }} </p>
-        </ion-item>
-        <ion-item-options side="right">
-          <button ion-button color="red" (click)="deleteProduct(product)">
-            <ion-icon name="ios-close-circle-outline"></ion-icon>
-            Delete
+          <div (click)="itemSelected(product)">
+            <h2>{{ product.name | uppercase }}</h2>
+            <p>{{ product.description }} - Cantidad: {{ product.quantity }} </p>
+          </div>
+          <button ion-button color="light" clear icon-only item-end (click)="deleteProduct(product)">
+            <ion-icon name="trash" is-active="false"></ion-icon>
           </button>
-        </ion-item-options>
-      </ion-item-sliding>
+        </ion-item>
     </ion-list>
     </ion-item-group>
-
-    <ion-fab bottom right>
-      <button ion-fab (click)="addProduct()"><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
   </ion-content>

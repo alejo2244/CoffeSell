@@ -38,7 +38,6 @@ export class ProductDetailPage {
   getCategories(){
     this.provider.getCategories().then(res => {
       this.categories = JSON.parse(JSON.stringify(res));
-      console.log(JSON.stringify(res));
     },
     error => {
       const toast = this.toastCtrl.create({
@@ -46,22 +45,17 @@ export class ProductDetailPage {
         duration: 3000
       });
       toast.present();
-      console.log(error);
     });
   }
   
   saveProduct()
   {
-    console.log(JSON.stringify(this.product));
     var product;
     this.provider.UpdateProduct(this.product).then(res => {
       product = res;      
       if(product != undefined)
       {
         product = res[0]; 
-        
-        console.log(JSON.stringify(product));
-
         const toast = this.toastCtrl.create({
           message: "Producto Actualizado con Exito...",
           duration: 3000
