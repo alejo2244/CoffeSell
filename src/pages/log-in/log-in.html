@@ -39,6 +39,10 @@
         <ion-input [(ngModel)]="user.password" [type]="passwordType" clearOnEdit="false"></ion-input>
         <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
     </ion-item>
+    <ion-item>
+      <ion-label>Mantener Sesión activa?</ion-label>
+      <ion-checkbox [(ngModel)]="session" item-end color="dark" checked="true"></ion-checkbox>
+    </ion-item>
 <br/>
 <br/>
 <br/>

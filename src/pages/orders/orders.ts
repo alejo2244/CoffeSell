@@ -31,6 +31,16 @@ export class OrdersPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrdersPage');
+
+  //   window["plugins"].gdrive.fileList(
+  //     function(res){
+  //       //the files are under res.flist;
+  //     console.log(res);
+  //     },
+  //     function(err){
+  //     console.log(err);
+  //     }
+  //  );
   }
 
   getProducts(){

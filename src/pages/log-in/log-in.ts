@@ -7,6 +7,7 @@ import { BranchsPage } from '../branchs/branchs';
 import { UsersPage } from '../users/users';
 import { OrderAdminPage } from '../order-admin/order-admin';
 import { CategoriesPage } from '../categories/categories';
+import { DatabaseService } from '../../providers/DBService/database-service';
 
 /**
  * Generated class for the LogInPage page.
@@ -23,13 +24,15 @@ export class LogInPage {
 
   indexCount:number = 0;
   src: any = "../../assests/imgs/Buttons/inicio.png";
+  session:boolean = false;
   user:any = {userName: "", password:""};
   constructor(public provider:ServerProvider,
               public toastCtrl: ToastController,
               private navCtrl: NavController,
               public toast: ToastController, 
               public viewCtrl: ViewController,
-              public loadingCtrl: LoadingController) {
+              public loadingCtrl: LoadingController,
+              public sqliteProvider: DatabaseService) {
   }
 
   ionViewDidLoad() {
@@ -55,6 +58,14 @@ export class LogInPage {
         if(user.enabled)
         {
           ServerProvider.logIn = 1;
+          
+          if(this.session)
+          {
+            this.sqliteProvider.addUserSession(user.rol, user.branchId, "", user._id).then(res => {
+              console.log("user SQLITE -> " + JSON.stringify(res));
+            });
+          }
+          
           this.indexCount = 1;
           loader.dismiss();
           this.navCtrl.push(LogInPage);

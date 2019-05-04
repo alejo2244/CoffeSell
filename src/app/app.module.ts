@@ -32,6 +32,8 @@ import { CreateBranchPage } from '../pages/create-branch/create-branch';
 import { CreateProductPage } from '../pages/create-product/create-product';
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { DatabaseService } from '../providers/DBService/database-service';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     SplashScreen,
     ServerProvider,
     OneSignal,
+    SQLite,
+    DatabaseService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

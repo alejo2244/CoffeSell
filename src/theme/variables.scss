@@ -41,6 +41,7 @@ $colors: (
   red:        #ff0101,
   green:      #089927,
   black:      #000000,
+  white:      #ffffff,
   transparent:#ffffff00,
   dark:       rgb(179, 81, 16)
 );
@@ -62,7 +63,11 @@ $background-color: transparent;
 
 
 $button-md-border-radius: 5px;
-
+$tabs-md-tab-icon-size: 30px;
+$tabs-md-tab-text-color: white;
+$tabs-md-tab-font-size: 1.5rem;
+$tabs-md-tab-font-size-active: 1.5rem;
+$tabs-md-tab-icon-color: white;
 
 // App Windows Variables
 // --------------------------------------------------
