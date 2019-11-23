@@ -10,9 +10,9 @@ export class DatabaseService {
   private database: SQLiteObject;
   private dbReady = new BehaviorSubject<boolean>(false);
 
-  constructor(private platform:Platform, private sqlite:SQLite) { 
+  constructor(private platform:Platform, private SQLite: SQLite) { 
     this.platform.ready().then(()=>{
-        window["plugins"].SQLite.create({
+        SQLite.create({
           name: 'CoffeSell.db',
           location: 'default'
         })

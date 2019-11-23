@@ -79,6 +79,10 @@ export class OrdersPage {
     toast.present();
   }
 
+  getUrl(icon: string): string {
+      return icon;
+  }
+
   itemSelected(product)
   {
       const prompt = this.alertCtrl.create({
