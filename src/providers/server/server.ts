@@ -16,7 +16,6 @@ export class ServerProvider {
 
   public static logIn: any = 0;
   public static branchID: any = 0;
-  public static orders: any[] = [];
   constructor(public http: HttpClient) {
     console.log('Hello ServerProvider Provider');
   }

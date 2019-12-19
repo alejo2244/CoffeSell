@@ -1,11 +1,25 @@
 // http://ionicframework.com/docs/theming/
 
 ion-content {
+    // background-image: url("../assets/imgs/fondoRealNoFake.jpg");
+    // background-position: center center;
+    background-size: cover;
+  }
+
+ion-header {
     background-image: url("../assets/imgs/fondoRealNoFake.jpg");
     background-position: center center;
     background-size: cover;
-    
   }
+
+ion-toolbar {
+  background-color: #ffffff00;
+}
+
+  .item-content {
+    background-color:#000000;
+  }
+
   
 // App Global Sass
 // --------------------------------------------------

@@ -19,7 +19,7 @@ export class OrderAdminPage {
   branchs: any = [];
   orders: any[] = [];
   constructor(public provider: ServerProvider, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
-    this.orders = ServerProvider.orders;
+    //this.orders = ServerProvider.orders;
     this.getBranchs();
     console.log(JSON.stringify(this.orders));
   }

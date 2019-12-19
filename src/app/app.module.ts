@@ -33,7 +33,6 @@ import { CreateProductPage } from '../pages/create-product/create-product';
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
-import { DatabaseService } from '../providers/DBService/database-service';
 
 @NgModule({
   declarations: [
@@ -95,7 +94,6 @@ import { DatabaseService } from '../providers/DBService/database-service';
     ServerProvider,
     OneSignal,
     SQLite,
-    DatabaseService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

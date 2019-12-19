@@ -68,9 +68,18 @@ export class OrdersPage {
 
   add(product)
   {
-    var ord = { name: product.name, quantity: 1 , url: product.url};
-    OrderDetailPage.order.push(ord);
+    var pend = OrderDetailPage.order.find(prod => prod.name == product.name);
+    console.log(OrderDetailPage.order);
+    if (pend != undefined){
+      pend.quantity = parseInt(pend.quantity) + 1;
+    }
+    else{
+      var ord = { name: product.name, quantity: 1 , price: product.price , url: product.url};
+      OrderDetailPage.order.push(ord);
+    }
     
+    console.log(ord);
+
     const toast = this.toast.create({
       message: product.name + " agregado al pedido...",
       duration: 3000,
@@ -80,6 +89,9 @@ export class OrdersPage {
   }
 
   getUrl(icon: string): string {
+      if(!icon.includes("http")){
+        icon = "http://drive.google.com/uc?export=view&id=13mI1CRvjjEG4kTwhazMlDiKbPZA2BwnL";
+      }
       return icon;
   }
 
@@ -106,9 +118,24 @@ export class OrdersPage {
           {
             text: 'Guardar',
             handler: data => {
-              console.log('Saved clicked' + JSON.stringify(data));
-              var ord = { name: product.name, quantity: data.Cantidad , url: product.url};
-              OrderDetailPage.order.push(ord);
+              if(data.Cantidad != "" && data.Cantidad > 0){
+                var pend = OrderDetailPage.order.find(prod => prod.name == product.name);
+                console.log(OrderDetailPage.order);
+                if (pend != undefined){
+                  pend.quantity = parseInt(pend.quantity) + parseInt(data.Cantidad);
+                }
+                else{
+                  var ord = { name: product.name, quantity: data.Cantidad , price: product.price , url: product.url};
+                  OrderDetailPage.order.push(ord);
+                }
+              }
+              else{
+                const toast = this.toast.create({
+                  message: "Debe agregar al menos un producto",
+                  duration: 3000
+                });
+                toast.present();
+              }
             }
           }
         ]

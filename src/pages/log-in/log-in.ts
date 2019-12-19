@@ -7,7 +7,6 @@ import { BranchsPage } from '../branchs/branchs';
 import { UsersPage } from '../users/users';
 import { OrderAdminPage } from '../order-admin/order-admin';
 import { CategoriesPage } from '../categories/categories';
-import { DatabaseService } from '../../providers/DBService/database-service';
 
 /**
  * Generated class for the LogInPage page.
@@ -31,8 +30,7 @@ export class LogInPage {
               private navCtrl: NavController,
               public toast: ToastController, 
               public viewCtrl: ViewController,
-              public loadingCtrl: LoadingController,
-              public sqliteProvider: DatabaseService) {
+              public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -59,12 +57,12 @@ export class LogInPage {
         {
           ServerProvider.logIn = 1;
           
-          if(this.session)
-          {
-            this.sqliteProvider.addUserSession(user.rol, user.branchId, "", user._id).then(res => {
-              console.log("user SQLITE -> " + JSON.stringify(res));
-            });
-          }
+          // if(this.session)
+          // {
+          //   this.sqliteProvider.addUserSession(user.rol, user.branchId, "", user._id).then(res => {
+          //     console.log("user SQLITE -> " + JSON.stringify(res));
+          //   });
+          // }
           
           this.indexCount = 1;
           loader.dismiss();
