@@ -74,7 +74,7 @@ export class OrdersPage {
       pend.quantity = parseInt(pend.quantity) + 1;
     }
     else{
-      var ord = { name: product.name, quantity: 1 , price: product.price , url: product.url};
+      var ord = { productId: product.productId, name: product.name, quantity: 1 , price: product.price , url: product.url};
       OrderDetailPage.order.push(ord);
     }
     
@@ -125,7 +125,7 @@ export class OrdersPage {
                   pend.quantity = parseInt(pend.quantity) + parseInt(data.Cantidad);
                 }
                 else{
-                  var ord = { name: product.name, quantity: data.Cantidad , price: product.price , url: product.url};
+                  var ord = { productId: product.productId, name: product.name, quantity: data.Cantidad , price: product.price , url: product.url};
                   OrderDetailPage.order.push(ord);
                 }
               }

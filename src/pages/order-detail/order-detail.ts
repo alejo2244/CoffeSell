@@ -62,18 +62,28 @@ export class OrderDetailPage {
 
   SendOrder()
   {
-    var orderData = {};
-
-    this.provider.CreateOrder(orderData).then(res => { 
-
-      OrderDetailPage.order = [];    
-      this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      const alert = this.alertCtrl.create({
-        title: 'Correcto!',
-        subTitle: 'Su pedido ha sido enviado',
-        buttons: ['Cerrar']
-      });
-      alert.present();
+    var orderData = { board: ServerProvider.board, branchId: ServerProvider.branchID, products: this.orders};
+    console.log(JSON.stringify(orderData));
+    this.provider.CreateOrder(orderData).then(res => {
+      console.log(res);
+      if(res.status == 200){
+        OrderDetailPage.order = [];    
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        const alert = this.alertCtrl.create({
+          title: 'Correcto!',
+          subTitle: res.description,
+          buttons: ['Cerrar']
+        });
+        alert.present();
+      }
+      else{
+        const alert = this.alertCtrl.create({
+          title: 'Error!',
+          subTitle: res.description,
+          buttons: ['Cerrar']
+        });
+        alert.present();
+      }
       
       },
       error => {

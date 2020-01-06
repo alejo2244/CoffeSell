@@ -15,7 +15,8 @@ import 'rxjs/add/operator/toPromise';
 export class ServerProvider {
 
   public static logIn: any = 0;
-  public static branchID: any = 0;
+  public static branchID: any = "0";
+  public static board: any = "0";
   constructor(public http: HttpClient) {
     console.log('Hello ServerProvider Provider');
   }
@@ -173,10 +174,8 @@ export class ServerProvider {
   }
 
   CreateOrder(orderData) {
-    let parameters = {
-      "productId": orderData.productId
-    }
-    return this.executeService("post", "orders", parameters, 0);
+    console.log(1);
+    return this.executeService("post", "orders", orderData, 0);
   }
 
   UpdateOrder(orderData) {    
