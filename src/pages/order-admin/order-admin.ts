@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ServerProvider } from '../../providers/server/server';
 
 /**
@@ -18,8 +18,9 @@ export class OrderAdminPage {
   branchSelect: any = "";
   branchs: any = [];
   orders: any[] = [];
-  constructor(public provider: ServerProvider, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
+  constructor(public provider: ServerProvider, public alertCtrl:AlertController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
     //this.orders = ServerProvider.orders;
+    this.getOrdersByBranch("0");
     this.getBranchs();
     console.log(JSON.stringify(this.orders));
   }
@@ -36,6 +37,28 @@ export class OrderAdminPage {
       });
       toast.present();
       console.log(error);
+    });
+  }
+
+  getOrdersByBranch(branch){
+    var branchId = branch;
+    var body = { "branchId" : branchId };
+    this.provider.getOrdersByBranchId(body).then(res => {
+      this.orders = JSON.parse(JSON.stringify(res));
+      console.log(JSON.stringify(res));
+    },
+    error => {
+      const alert = this.alertCtrl.create({
+        title: 'Error!',
+        subTitle: JSON.parse(error).error.text,
+        buttons: [ {text: 'Cerrar',
+        handler: data => {
+          setTimeout(function(){}, 2000);
+          this.getOrdersByBranch("0");
+          this.getBranchs();
+        }}]
+      });
+      alert.present();
     });
   }
 

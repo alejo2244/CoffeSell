@@ -38,6 +38,7 @@ export class OrderDetailPage {
         subTitle: 'Agregue productos al pedido',
         buttons: [ {text: 'Cerrar',
         handler: data => {
+          setTimeout(function(){}, 2000);
           location.reload();
         }}]
       });

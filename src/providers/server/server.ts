@@ -17,6 +17,8 @@ export class ServerProvider {
   public static logIn: any = 0;
   public static branchID: any = "0";
   public static board: any = "0";
+  private static urlService: string = "http://localhost:8080/app/";
+  //private static urlService: string = "https://coffeesell.herokuapp.com/app/";
   constructor(public http: HttpClient) {
     console.log('Hello ServerProvider Provider');
   }
@@ -26,16 +28,16 @@ export class ServerProvider {
     switch(method)
     {
       case "get":
-      promise = new Promise((resolve, reject) => { this.http.get("https://coffeesell.herokuapp.com/app/" + service).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
+      promise = new Promise((resolve, reject) => { this.http.get(ServerProvider.urlService + service).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
       break;
       case "post":
-      promise = new Promise((resolve, reject) => { this.http.post("https://coffeesell.herokuapp.com/app/" + service, parameters).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
+      promise = new Promise((resolve, reject) => { this.http.post(ServerProvider.urlService  + service, parameters).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
       break;
       case "patch":
-      promise = new Promise((resolve, reject) => { this.http.patch("https://coffeesell.herokuapp.com/app/" + service + "/" + id, parameters).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
+      promise = new Promise((resolve, reject) => { this.http.patch(ServerProvider.urlService  + service + "/" + id, parameters).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
       break;
       case "delete":
-      promise = new Promise((resolve, reject) => { this.http.delete("https://coffeesell.herokuapp.com/app/" + service + "/" + id).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
+      promise = new Promise((resolve, reject) => { this.http.delete(ServerProvider.urlService  + service + "/" + id).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
       break;
     }
     return promise;
@@ -173,8 +175,13 @@ export class ServerProvider {
     return this.executeService("get", "orders", null, 0);
   }
 
+  getOrdersByBranchId(body) {
+    return new Promise((resolve, reject) => { 
+      this.http.get(ServerProvider.urlService + "orders/" + body.branchId, body ).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); 
+    });;
+  }
+
   CreateOrder(orderData) {
-    console.log(1);
     return this.executeService("post", "orders", orderData, 0);
   }
 
