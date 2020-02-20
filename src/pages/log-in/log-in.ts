@@ -57,13 +57,13 @@ export class LogInPage {
         {
           ServerProvider.logIn = 1;
           
-          // if(this.session)
-          // {
-          //   this.sqliteProvider.addUserSession(user.rol, user.branchId, "", user._id).then(res => {
-          //     console.log("user SQLITE -> " + JSON.stringify(res));
-          //   });
-          // }
-          
+          if(this.session)
+          {
+            ServerProvider.userId = user._id;
+            console.log("ServerProvider.userId: " + ServerProvider.userId);
+            this.provider.createSession(ServerProvider.oneSignalId, user._id, user.rol);
+          }
+
           this.indexCount = 1;
           loader.dismiss();
           this.navCtrl.push(LogInPage);
@@ -120,10 +120,35 @@ export class LogInPage {
   }
 
   LogOut(){
-    ServerProvider.logIn = 0;
-    this.indexCount = 0;
-    localStorage.setItem("login", this.indexCount.toString());
-    window.location.reload();
+    const loader = this.loadingCtrl.create({
+      content: "Cerrando Sesión..."
+    });
+    loader.present();
+    setTimeout(() => {
+      console.log("ServerProvider.userId: " + ServerProvider.userId);
+      if(ServerProvider.userId != "0"){
+        this.provider.deleteSession(ServerProvider.userId).then(res => {
+
+          if(res.title == "SUCCESSFUL" || res.title == "SESSION_ERROR"){
+            console.log("deleteSessionRes: " + JSON.stringify(res));
+            window.location.reload();
+          }
+          else {
+            loader.dismiss();
+            const toast = this.toast.create({
+              message: res.title + " " + res.description,
+              duration: 3000
+            });
+            toast.present();
+            console.log(res.title + " " + res.description);
+          }
+        });
+      }
+      else {
+        window.location.reload();
+      }
+    }, 1000);
+    
   }
 
   dismiss() {

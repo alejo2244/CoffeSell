@@ -17,8 +17,10 @@ export class ServerProvider {
   public static logIn: any = 0;
   public static branchID: any = "0";
   public static board: any = "0";
-  private static urlService: string = "http://localhost:8080/app/";
-  //private static urlService: string = "https://coffeesell.herokuapp.com/app/";
+  public static oneSignalId: any = "0";
+  public static userId: any = "0";
+  //private static urlService: string = "http://localhost:8080/app/";
+  private static urlService: string = "https://coffeesell.herokuapp.com/app/";
   constructor(public http: HttpClient) {
     console.log('Hello ServerProvider Provider');
   }
@@ -39,6 +41,9 @@ export class ServerProvider {
       case "delete":
       promise = new Promise((resolve, reject) => { this.http.delete(ServerProvider.urlService  + service + "/" + id).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
       break;
+      case "getP":
+      promise = new Promise((resolve, reject) => { this.http.get(ServerProvider.urlService  + service + "/" + id).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
+      break;
     }
     return promise;
   }
@@ -49,6 +54,23 @@ export class ServerProvider {
       "password": password
     }
     return this.executeService("post", "login", parameters, 0);
+  }
+
+  createSession(oneSignalId, userId, rolId) {
+    let parameters = {
+      "oneSignalId": oneSignalId,
+      "userId": userId,
+      "rolId": rolId
+    }
+    return this.executeService("post", "sessions", parameters, 0);
+  }
+
+  deleteSession(userId) {
+    return this.executeService("delete", "sessions", null, userId);
+  }
+
+  getSession(userId) {
+    return this.executeService("getP", "sessions", null, userId);
   }
 
   getUsers() {

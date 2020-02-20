@@ -7,6 +7,7 @@ import { OSNotificationPayload } from '@ionic-native/onesignal/ngx';
 import { isCordovaAvailable } from '../common/is-cordova-available';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { ServerProvider } from '../providers/server/server';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +19,8 @@ export class MyApp {
   
   constructor(public platform: Platform, 
     public statusBar: StatusBar, 
-    public splashScreen: SplashScreen) {
+    public splashScreen: SplashScreen,
+    public provider:ServerProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -36,6 +38,14 @@ export class MyApp {
         console.log("--------5---------");
         window["plugins"].OneSignal.endInit();
         console.log("--------6---------");
+        window["plugins"].OneSignal.getIds(function(data){
+          ServerProvider.oneSignalId = data.userId;
+            provider.getSession(data.userId).then(res => {
+              if(res.length > 0){
+                ServerProvider.logIn = 1;
+              }
+          });
+        });
       }
     });
   }
