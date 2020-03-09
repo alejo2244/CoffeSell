@@ -56,10 +56,9 @@ export class LogInPage {
         if(user.enabled)
         {
           ServerProvider.logIn = 1;
-          
+          ServerProvider.userId = user._id;
           if(this.session)
           {
-            ServerProvider.userId = user._id;
             console.log("ServerProvider.userId: " + ServerProvider.userId);
             this.provider.createSession(ServerProvider.oneSignalId, user._id, user.rol);
           }
@@ -131,6 +130,8 @@ export class LogInPage {
 
           if(res.title == "SUCCESSFUL" || res.title == "SESSION_ERROR"){
             console.log("deleteSessionRes: " + JSON.stringify(res));
+            ServerProvider.logIn = 0;
+            this.indexCount = 0;
             window.location.reload();
           }
           else {
@@ -145,6 +146,8 @@ export class LogInPage {
         });
       }
       else {
+        ServerProvider.logIn = 0;
+        this.indexCount = 0;
         window.location.reload();
       }
     }, 1000);

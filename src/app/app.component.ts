@@ -41,8 +41,17 @@ export class MyApp {
         window["plugins"].OneSignal.getIds(function(data){
           ServerProvider.oneSignalId = data.userId;
             provider.getSession(data.userId).then(res => {
+              console.log("res-->" + JSON.stringify(res));
               if(res.length > 0){
+                console.log("res--->" + res[0].userId);
+                ServerProvider.userId = res[0].userId;
                 ServerProvider.logIn = 1;
+                provider.getInfoDevice(res[0].oneSignalId).then(info => {
+                  if(info.length > 0){
+                    ServerProvider.branchID = info[0].branchId;
+                    ServerProvider.board = info[0].table;
+                  }
+                });
               }
           });
         });

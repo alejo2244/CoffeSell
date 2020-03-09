@@ -16,13 +16,20 @@ import { ServerProvider } from '../../providers/server/server';
 export class OrderDetailPage {
 
   public static order: any [] = [];
-  public static brachId: number;
-  public static board: number;
+  public branchId: number;
+  public board: number;
+  status: string = "PENDIENTE - SIN ENVIAR";
+  orderId: string = "";
+  textButton: string = "ACEPTAR PEDIDO";
+  hasOrder: boolean;
+  enabledButton: boolean = true;
   orders: any [] = [];
   total: number = 0;
   constructor(public toast: ToastController, public alertCtrl:AlertController, public provider: ServerProvider, public viewCtrl:ViewController, public navCtrl: NavController, public navParams: NavParams) {
     this.orders = OrderDetailPage.order;
     console.log("order -> " + OrderDetailPage.order.length);
+    this.branchId = ServerProvider.branchID;
+    this.board = ServerProvider.board;
   }
 
   ionViewWillEnter() {
@@ -33,49 +40,84 @@ export class OrderDetailPage {
     });
     this.total = tmp;
     if(this.total == 0){
-      const alert = this.alertCtrl.create({
-        title: 'Error!',
-        subTitle: 'Agregue productos al pedido',
-        buttons: [ {text: 'Cerrar',
-        handler: data => {
-          setTimeout(function(){}, 2000);
-          location.reload();
-        }}]
-      });
-      alert.present();
+      this.enabledButton = false;
+    }
+    else{
+      this.enabledButton = true;
     }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderDetailPage');
-    if(OrderDetailPage.order.length == 0){
-      const alert = this.alertCtrl.create({
-        title: 'Error!',
-        subTitle: 'Agregue productos al pedido',
-        buttons: [ {text: 'Cerrar',
-        handler: data => {
-          location.reload();
-        }}]
-      });
-      alert.present();
-    }
+    this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "PENDIENTE").then(resPend=>{
+      console.log(resPend);
+      if(resPend.length > 0){
+        console.log(resPend[0]);
+        this.textButton = "ACTUALIZAR PEDIDO";
+        this.status = resPend[0].status;
+        this.orderId = resPend[0].orderId;
+        resPend[0].products.forEach(product => {
+          OrderDetailPage.order.push(product);
+          this.orders = OrderDetailPage.order;
+          var tmp = 0;
+          this.orders.forEach (function(numero){
+            tmp += numero.price * numero.quantity;
+          });
+          this.total = tmp;
+        });        
+        this.enabledButton = true;
+      }
+      else{
+        this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "EN PROCESO").then(resProc=>{
+          if(resProc.length > 0){
+            console.log(resProc);
+            this.textButton = "ACTUALIZAR PEDIDO";
+            this.status = resPend[0].status;
+            this.orderId = resPend[0].orderId;
+            resPend[0].products.forEach(product => {
+              OrderDetailPage.order.push(product);
+              this.orders = OrderDetailPage.order;
+              var tmp = 0;
+              this.orders.forEach (function(numero){
+                tmp += numero.price * numero.quantity;
+              });
+              this.total = tmp;
+            });
+            this.enabledButton = true;
+          }
+          else{
+            OrderDetailPage.order = [];
+            this.enabledButton = true;
+          }
+        });
+      }
+    });
   }
 
   SendOrder()
   {
-    var orderData = { board: ServerProvider.board, branchId: ServerProvider.branchID, products: this.orders};
+    var orderData = { status: "PENDIENTE", board: ServerProvider.board, branchId: ServerProvider.branchID, products: this.orders};
     console.log(JSON.stringify(orderData));
     this.provider.CreateOrder(orderData).then(res => {
       console.log(res);
       if(res.status == 200){
         OrderDetailPage.order = [];    
         this.navCtrl.setRoot(this.navCtrl.getActive().component);
-        const alert = this.alertCtrl.create({
-          title: 'Correcto!',
-          subTitle: res.description,
-          buttons: ['Cerrar']
+        this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "PENDIENTE").then(resPend=>{
+          if(resPend.length > 0){
+            OrderDetailPage.order.push(resPend[0]);
+          }
+          else{
+            this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "EN PROCESO").then(resProc=>{
+              if(resProc.length > 0){
+                OrderDetailPage.order.push(resProc[0]);
+              }
+              else{
+                OrderDetailPage.order = [];
+              }
+            });
+          }
         });
-        alert.present();
       }
       else{
         const alert = this.alertCtrl.create({
@@ -135,15 +177,7 @@ export class OrderDetailPage {
       OrderDetailPage.order = [];
       this.orders = [];
       this.total = 0;
-      const alert = this.alertCtrl.create({
-        title: 'Error!',
-        subTitle: 'Agregue productos al pedido',
-        buttons: [ {text: 'Cerrar',
-        handler: data => {
-          location.reload();
-        }}]
-      });
-      alert.present();
+      this.enabledButton = false;
     }
     else{
       var temp = [];
@@ -153,7 +187,40 @@ export class OrderDetailPage {
         }
       }
       this.orders = temp;
+      this.enabledButton = true;
       OrderDetailPage.order = temp;
     }
   }
+  
+  deleteOrder(){
+    const confirm = this.alertCtrl.create({
+      title: 'Eliminar?',
+      message: '¿En realidad desea eliminar el pedido en curso?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.provider.DeleteOrder(this.orderId).then(res => {
+              
+            },
+            error => {
+              const toast = this.toast.create({
+                message: JSON.parse(error).error.description,
+                duration: 3000
+              });
+              toast.present();
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
 }

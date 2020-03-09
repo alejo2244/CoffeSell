@@ -3,22 +3,23 @@
     <table>
       <tr>
         <td center>
-          <img src="../../assets/imgs/logo.png" width="80px" style="display:inline-block;" height="80px">
+          <img src="../../assets/imgs/logo.png" (click)="dismiss()" width="80px" style="display:inline-block;" height="80px">
         </td>
         <td>
-          <ion-title>Ingresar</ion-title>
+          <ion-title *ngIf="indexCount == 0">Ingresar</ion-title>
+          <ion-title *ngIf="indexCount != 0">Menú</ion-title>
         </td>
       </tr>
     </table>    
     <ion-buttons end *ngIf="indexCount == 0">
       <button ion-button (click)="dismiss()">
-        Cancelar
+        Atras
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="indexCount == 1">
         <button ion-button icon-only (click)="LogOut()">
           <ion-icon name="md-power"></ion-icon>
-          &nbsp;Salir
+          &nbsp;Cerrar Sesión
         </button>
       </ion-buttons>
   </ion-navbar>

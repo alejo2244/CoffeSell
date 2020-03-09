@@ -20,23 +20,28 @@
 </ion-header>
 
 <ion-content padding style="background: #000;">
-    <label>Mesa: {{ brachId }}</label>
+    <label>Sucursal: {{ branchId }}</label><br/>
+    <label>Mesa: {{ board }}</label>
     <ion-item-group full>
-      <ion-item-divider color="light">Pedido</ion-item-divider>
+      <ion-item-divider color="light">Pedido {{ status }}
+        <ion-icon item-right name="ellipsis-horizontal-outline" (click)="deleteOrder()"></ion-icon></ion-item-divider>
         <ion-item *ngFor="let pedido of orders">
-              <ion-avatar item-start>
-                <img [src]="getUrl(pedido.url)">
-              </ion-avatar>
-            <h2>{{ pedido.name | uppercase }}</h2>
-            <p>{{ pedido.quantity }}</p>
-            <p><strong>$</strong>{{ pedido.price * pedido.quantity }}</p>
-            <ion-badge item-end (click)="add(pedido)">+</ion-badge>
-            <ion-badge item-end (click)="remove(pedido)">-</ion-badge>
-          </ion-item>
+            <ion-avatar item-start>
+              <img [src]="getUrl(pedido.url)">
+            </ion-avatar>
+          <h2>{{ pedido.name | uppercase }}</h2>
+          <p>{{ pedido.quantity }}</p>
+          <p><strong>$</strong>{{ pedido.price * pedido.quantity }}</p>
+          <ion-badge item-end (click)="add(pedido)">+</ion-badge>
+          <ion-badge item-end (click)="remove(pedido)">-</ion-badge>
+        </ion-item>
+        <ion-item *ngIf="orders.length <= 0 || !orders">
+          No hay pedido creado.
+        </ion-item>
       </ion-item-group>
     <ion-footer>
-        <ion-toolbar>
-            <button ion-button full (click)="SendOrder()">Aceptar Pedido ${{ total }}</button>
-        </ion-toolbar>
-      </ion-footer>
+      <ion-toolbar *ngIf="enabledButton">
+        <button ion-button full (click)="SendOrder()">Aceptar Pedido ${{ total }}</button>
+      </ion-toolbar>
+    </ion-footer>
 </ion-content>

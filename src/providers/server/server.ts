@@ -44,6 +44,9 @@ export class ServerProvider {
       case "getP":
       promise = new Promise((resolve, reject) => { this.http.get(ServerProvider.urlService  + service + "/" + id).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
       break;
+      case "getWithP":
+      promise = new Promise((resolve, reject) => { this.http.get(ServerProvider.urlService  + service, {observe: parameters}).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); });
+      break;
     }
     return promise;
   }
@@ -72,6 +75,29 @@ export class ServerProvider {
   getSession(userId) {
     return this.executeService("getP", "sessions", null, userId);
   }
+
+  getInfoDevice(oneSignalId) {
+    return this.executeService("getP", "infoDevice", null, oneSignalId);
+  }
+
+  getOrdersByStatus(branchId, board, status) {
+    let parameters = {
+      "branchId": branchId,
+      "board": board,
+      "status": status
+    }
+    console.log("parameters:" + JSON.stringify(parameters));
+    return this.executeService("post", "ordersByStatus", parameters, null);
+  }
+
+  getOrdersByBranchAndBoard(branchId, board) {
+    let parameters = {
+      "branchId": branchId,
+      "board": board
+    }
+    return this.executeService("getWithP", "ordersByBranchAndBoard", parameters, null);
+  }
+  
 
   getUsers() {
     return this.executeService("get", "users", null, 0);
