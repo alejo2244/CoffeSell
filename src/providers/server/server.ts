@@ -223,10 +223,8 @@ export class ServerProvider {
     return this.executeService("get", "orders", null, 0);
   }
 
-  getOrdersByBranchId(body) {
-    return new Promise((resolve, reject) => { 
-      this.http.get(ServerProvider.urlService + "orders/" + body.branchId, body ).subscribe(data => { resolve(data); }, err => { reject(JSON.stringify(err)); }); 
-    });;
+  getOrdersByBranchId(body) {   
+    return this.executeService("post", "ordersByBranch", body, null);
   }
 
   CreateOrder(orderData) {

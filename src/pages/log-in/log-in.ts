@@ -154,6 +154,14 @@ export class LogInPage {
     
   }
 
+  redirectHome(){
+    const loader = this.loadingCtrl.create({
+      content: "Redireccionando..."
+    });
+    loader.present();
+    window.location.reload();
+  }
+
   dismiss() {
     this.viewCtrl.dismiss();
   }

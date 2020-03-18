@@ -20,9 +20,9 @@ export class OrderAdminPage {
   orders: any[] = [];
   constructor(public provider: ServerProvider, public alertCtrl:AlertController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
     //this.orders = ServerProvider.orders;
-    this.getOrdersByBranch("0");
+    this.getOrdersByBranch(ServerProvider.branchID);
     this.getBranchs();
-    console.log(JSON.stringify(this.orders));
+    this.branchSelect = ServerProvider.branchID;
   }
 
   getBranchs(){
@@ -44,8 +44,14 @@ export class OrderAdminPage {
     var branchId = branch;
     var body = { "branchId" : branchId };
     this.provider.getOrdersByBranchId(body).then(res => {
-      this.orders = JSON.parse(JSON.stringify(res));
-      console.log(JSON.stringify(res));
+      if(res.status){
+        this.orders = res.orders;
+      }
+      else{
+        this.orders = [];
+      }
+      console.log("ORDENES");
+      console.log(this.orders);
     },
     error => {
       const alert = this.alertCtrl.create({
@@ -60,6 +66,21 @@ export class OrderAdminPage {
       });
       alert.present();
     });
+  }
+  
+  getUrl(icon: string): string {
+    if(!icon.includes("http")){
+      icon = "http://drive.google.com/uc?export=view&id=13mI1CRvjjEG4kTwhazMlDiKbPZA2BwnL";
+    }
+    return icon;
+  }
+
+  loadTotal(ord){
+    var tmp = 0;
+    ord.products.forEach (function(numero){
+      tmp += numero.price * numero.quantity;
+    });
+    return tmp;
   }
 
   ionViewDidLoad() {

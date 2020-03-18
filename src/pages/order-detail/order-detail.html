@@ -20,11 +20,20 @@
 </ion-header>
 
 <ion-content padding style="background: #000;">
-    <label>Sucursal: {{ branchId }}</label><br/>
-    <label>Mesa: {{ board }}</label>
+  <table>
+    <tr>
+      <td>
+        <ion-icon name="settings-outline" (click)="changeOptionsDevice()"></ion-icon>
+      </td>
+      <td>
+        <label>Sucursal: {{ branchId }}</label><br/>
+        <label>Mesa: {{ board }}</label>
+      </td>
+    </tr>
+  </table>
     <ion-item-group full>
       <ion-item-divider color="light">Pedido {{ status }}
-        <ion-icon item-right name="ellipsis-horizontal-outline" (click)="deleteOrder()"></ion-icon></ion-item-divider>
+        <ion-icon *ngIf="orderId.length > 0" item-right name="ellipsis-horizontal-outline" (click)="deleteOrder()">-</ion-icon></ion-item-divider>
         <ion-item *ngFor="let pedido of orders">
             <ion-avatar item-start>
               <img [src]="getUrl(pedido.url)">
@@ -41,7 +50,7 @@
       </ion-item-group>
     <ion-footer>
       <ion-toolbar *ngIf="enabledButton">
-        <button ion-button full (click)="SendOrder()">Aceptar Pedido ${{ total }}</button>
+        <button ion-button full (click)="SendOrder()">{{textButton}} ${{ total }}</button>
       </ion-toolbar>
     </ion-footer>
 </ion-content>

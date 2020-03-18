@@ -12,23 +12,22 @@
 
 <ion-content padding>
     <ion-item-group *ngFor="let ord of orders" full>
-        <ion-item-divider color="light">Mesa: {{ ord.board }}</ion-item-divider>
-      <ion-list>
-        <ion-item-sliding>
-          <ion-item>
-            <h2>Estado: {{ ord.status | uppercase }}</h2>
-            <p>ID Orden {{ ord.orderId }} </p>
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button color="red">
-              <ion-icon name="ios-close-circle-outline"></ion-icon>
-              Change Status
-            </button>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
+        <ion-item-divider color="light">Mesa: {{ ord.board }} <br /> Estado: {{ ord.status | uppercase }}</ion-item-divider>
+          <ion-item *ngFor="let producto of ord.products">
+            <ion-avatar item-start>
+              <img [src]="getUrl(producto.url)">
+            </ion-avatar>
+          <h2>{{ producto.name | uppercase }}</h2>
+          <p>{{ producto.quantity }}</p>
+          <p><strong>$</strong>{{ producto.price * producto.quantity }}</p>
+        </ion-item>
+        <ion-item-divider color="light">Total: {{ loadTotal(ord) }}</ion-item-divider>
       </ion-item-group>
-      
+    <ion-item-group *ngIf="orders.length <= 0 || !orders">
+        <ion-item>
+          No hay pedidos para esta sucursal.
+        </ion-item>
+      </ion-item-group>
   <ion-footer>
     <ion-toolbar>
       <ion-item>

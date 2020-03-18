@@ -33,6 +33,7 @@ export class OrderDetailPage {
   }
 
   ionViewWillEnter() {
+    console.log('ionViewWillEnter OrderDetailPage');
     this.orders = OrderDetailPage.order;
     var tmp = 0;
     this.orders.forEach (function(numero){
@@ -49,49 +50,7 @@ export class OrderDetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderDetailPage');
-    this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "PENDIENTE").then(resPend=>{
-      console.log(resPend);
-      if(resPend.length > 0){
-        console.log(resPend[0]);
-        this.textButton = "ACTUALIZAR PEDIDO";
-        this.status = resPend[0].status;
-        this.orderId = resPend[0].orderId;
-        resPend[0].products.forEach(product => {
-          OrderDetailPage.order.push(product);
-          this.orders = OrderDetailPage.order;
-          var tmp = 0;
-          this.orders.forEach (function(numero){
-            tmp += numero.price * numero.quantity;
-          });
-          this.total = tmp;
-        });        
-        this.enabledButton = true;
-      }
-      else{
-        this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "EN PROCESO").then(resProc=>{
-          if(resProc.length > 0){
-            console.log(resProc);
-            this.textButton = "ACTUALIZAR PEDIDO";
-            this.status = resPend[0].status;
-            this.orderId = resPend[0].orderId;
-            resPend[0].products.forEach(product => {
-              OrderDetailPage.order.push(product);
-              this.orders = OrderDetailPage.order;
-              var tmp = 0;
-              this.orders.forEach (function(numero){
-                tmp += numero.price * numero.quantity;
-              });
-              this.total = tmp;
-            });
-            this.enabledButton = true;
-          }
-          else{
-            OrderDetailPage.order = [];
-            this.enabledButton = true;
-          }
-        });
-      }
-    });
+    this.cargarOrden();
   }
 
   SendOrder()
@@ -101,23 +60,8 @@ export class OrderDetailPage {
     this.provider.CreateOrder(orderData).then(res => {
       console.log(res);
       if(res.status == 200){
-        OrderDetailPage.order = [];    
-        this.navCtrl.setRoot(this.navCtrl.getActive().component);
-        this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "PENDIENTE").then(resPend=>{
-          if(resPend.length > 0){
-            OrderDetailPage.order.push(resPend[0]);
-          }
-          else{
-            this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "EN PROCESO").then(resProc=>{
-              if(resProc.length > 0){
-                OrderDetailPage.order.push(resProc[0]);
-              }
-              else{
-                OrderDetailPage.order = [];
-              }
-            });
-          }
-        });
+        //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+        this.cargarOrden();
       }
       else{
         const alert = this.alertCtrl.create({
@@ -207,7 +151,20 @@ export class OrderDetailPage {
           text: 'Aceptar',
           handler: () => {
             this.provider.DeleteOrder(this.orderId).then(res => {
-              
+              if(res.status){
+                const toast = this.toast.create({
+                  message: "Orden eliminada.",
+                  duration: 3000,
+                  position: "top"
+                });
+                toast.present();
+                this.orders = [];
+                OrderDetailPage.order = [];
+                this.enabledButton = false;
+                this.status = "PENDIENTE - SIN ENVIAR";
+                this.textButton = "ACEPTAR PEDIDO";
+                this.orderId = "";
+              }
             },
             error => {
               const toast = this.toast.create({
@@ -222,5 +179,59 @@ export class OrderDetailPage {
     });
     confirm.present();
   }
-
+  private cargarOrden(){
+    this.limpiarDatos();
+    this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "PENDIENTE").then(resPend=>{
+      console.log(resPend);
+      if(resPend.length > 0){
+        console.log(resPend[0]);
+        this.textButton = "ACTUALIZAR PEDIDO";
+        this.status = resPend[0].status;
+        this.orderId = resPend[0].orderId;
+        resPend[0].products.forEach(product => {
+          OrderDetailPage.order.push(product);
+          this.orders = OrderDetailPage.order;
+          var tmp = 0;
+          this.orders.forEach (function(numero){
+            tmp += numero.price * numero.quantity;
+          });
+          this.total = tmp;
+        });        
+        this.enabledButton = true;
+      }
+      else{
+        this.orderId = "";
+        this.provider.getOrdersByStatus(ServerProvider.branchID, ServerProvider.board, "EN PROCESO").then(resProc=>{
+          if(resProc.length > 0){
+            console.log(resProc);
+            this.textButton = "ACTUALIZAR PEDIDO";
+            this.status = resPend[0].status;
+            this.orderId = resPend[0].orderId;
+            resPend[0].products.forEach(product => {
+              OrderDetailPage.order.push(product);
+              this.orders = OrderDetailPage.order;
+              var tmp = 0;
+              this.orders.forEach (function(numero){
+                tmp += numero.price * numero.quantity;
+              });
+              this.total = tmp;
+            });
+            this.enabledButton = true;
+          }
+          else{
+            this.orderId = "";
+            OrderDetailPage.order = [];
+            this.enabledButton = false;
+          }
+        });
+      }
+    });
+  }
+  private limpiarDatos(){
+    this.orders = [];
+    OrderDetailPage.order = [];
+    this.enabledButton = false;
+    this.status = "PENDIENTE - SIN ENVIAR";
+    this.textButton = "ACEPTAR PEDIDO";
+  }
 }
