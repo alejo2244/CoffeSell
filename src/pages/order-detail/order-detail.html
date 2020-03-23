@@ -12,39 +12,38 @@
             <img src="../../assets/imgs/logo.png" width="40px" style="display:inline-block" height="40px">
           </td>
           <td>
-            <ion-title>Detalle del Pedido</ion-title>
+            <ion-title>
+              Detalle del Pedido
+            </ion-title>
           </td>
         </tr>
       </table>
+      <ion-buttons end>
+        <button ion-button (click)="updateInfoDevice()" large color="light">
+          <ion-icon name="settings"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding style="background: #000;">
-  <table>
-    <tr>
-      <td>
-        <ion-icon name="settings-outline" (click)="changeOptionsDevice()"></ion-icon>
-      </td>
-      <td>
-        <label>Sucursal: {{ branchId }}</label><br/>
-        <label>Mesa: {{ board }}</label>
-      </td>
-    </tr>
-  </table>
+    <label>Sucursal: {{ branchLabel }}</label><br/>
+    <label>Mesa: {{ board }}</label>
     <ion-item-group full>
       <ion-item-divider color="light">Pedido {{ status }}
-        <ion-icon *ngIf="orderId.length > 0" item-right name="ellipsis-horizontal-outline" (click)="deleteOrder()">-</ion-icon></ion-item-divider>
-        <ion-item *ngFor="let pedido of orders">
+        <ion-icon *ngIf="orderId != '' && status == 'PENDIENTE'" item-right name="trash" (click)="deleteOrder()"></ion-icon>
+      </ion-item-divider>
+        <ion-item *ngFor="let product of products">
             <ion-avatar item-start>
-              <img [src]="getUrl(pedido.url)">
+              <img [src]="getUrl(product.url)">
             </ion-avatar>
-          <h2>{{ pedido.name | uppercase }}</h2>
-          <p>{{ pedido.quantity }}</p>
-          <p><strong>$</strong>{{ pedido.price * pedido.quantity }}</p>
-          <ion-badge item-end (click)="add(pedido)">+</ion-badge>
-          <ion-badge item-end (click)="remove(pedido)">-</ion-badge>
+          <h2>{{ product.name | uppercase }}</h2>
+          <p>{{ product.quantity }}</p>
+          <p><strong>$</strong>{{ product.price * product.quantity }}</p>
+          <ion-badge item-end (click)="add(product)">+</ion-badge>
+          <ion-badge item-end (click)="remove(product)">-</ion-badge>
         </ion-item>
-        <ion-item *ngIf="orders.length <= 0 || !orders">
+        <ion-item *ngIf="products.length <= 0 || !products">
           No hay pedido creado.
         </ion-item>
       </ion-item-group>

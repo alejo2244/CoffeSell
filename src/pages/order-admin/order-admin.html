@@ -11,8 +11,15 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+    <ion-label stacked>Sucursal</ion-label>
+    <ion-select [(ngModel)]="branchSelect" (ionChange)="getOrdersByBranch($event)" okText="Aceptar" cancelText="Cancelar" full>
+      <ion-option *ngFor="let branch of branchs" value="{{ branch.branchId }}">{{ branch.nameBranch }}</ion-option>
+    </ion-select>
     <ion-item-group *ngFor="let ord of orders" full>
-        <ion-item-divider color="light">Mesa: {{ ord.board }} <br /> Estado: {{ ord.status | uppercase }}</ion-item-divider>
+        <ion-item-divider ion-item color="light" no-lines>Mesa: {{ ord.board }} <br /> Estado: {{ ord.status | uppercase }}
+            <ion-icon item-right name="hammer" (click)="getOrder(ord.orderId)"></ion-icon>
+        </ion-item-divider>
           <ion-item *ngFor="let producto of ord.products">
             <ion-avatar item-start>
               <img [src]="getUrl(producto.url)">
@@ -28,14 +35,5 @@
           No hay pedidos para esta sucursal.
         </ion-item>
       </ion-item-group>
-  <ion-footer>
-    <ion-toolbar>
-      <ion-item>
-        <ion-label stacked>Sucursal</ion-label>
-        <ion-select [(ngModel)]="branchSelect" (ionChange)="getOrdersByBranch($event)" okText="Aceptar" cancelText="Cancelar">
-          <ion-option *ngFor="let branch of branchs" value="{{ branch.branchId }}">{{ branch.nameBranch }}</ion-option>
-        </ion-select>
-      </ion-item>
-    </ion-toolbar>
-  </ion-footer>
+  </ion-list>
 </ion-content>

@@ -15,8 +15,6 @@ import 'rxjs/add/operator/toPromise';
 export class ServerProvider {
 
   public static logIn: any = 0;
-  public static branchID: any = "0";
-  public static board: any = "0";
   public static oneSignalId: any = "0";
   public static userId: any = "0";
   //private static urlService: string = "http://localhost:8080/app/";
@@ -78,6 +76,14 @@ export class ServerProvider {
 
   getInfoDevice(oneSignalId) {
     return this.executeService("getP", "infoDevice", null, oneSignalId);
+  }
+
+  createInfoDevice(params) {
+    return this.executeService("post", "infoDevice", params, null);
+  }
+
+  updateInfoDevice(params) {
+    return this.executeService("patch", "infoDevice", params, params.oneSignalId);
   }
 
   getOrdersByStatus(branchId, board, status) {
@@ -231,11 +237,15 @@ export class ServerProvider {
     return this.executeService("post", "orders", orderData, 0);
   }
 
-  UpdateOrder(orderData) {    
+  UpdateStatusOrder(orderId, status) {    
     let parameters = {
-      "productId": orderData.productId
+      "status": status
     }
-    return this.executeService("patch", "orders", parameters, orderData.Id);
+    return this.executeService("patch", "orderStatus", parameters, orderId);
+  }
+
+  UpdateProductsOrder(orderId, products) {
+    return this.executeService("patch", "ordersProducts", products, orderId);
   }
 
   DeleteOrder(_id) {

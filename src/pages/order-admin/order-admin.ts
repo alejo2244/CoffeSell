@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ServerProvider } from '../../providers/server/server';
+import { InfoDevicePage } from '../info-device/info-device';
 
 /**
  * Generated class for the OrderAdminPage page.
@@ -19,10 +20,9 @@ export class OrderAdminPage {
   branchs: any = [];
   orders: any[] = [];
   constructor(public provider: ServerProvider, public alertCtrl:AlertController, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
-    //this.orders = ServerProvider.orders;
-    this.getOrdersByBranch(ServerProvider.branchID);
+    this.getOrdersByBranch(InfoDevicePage.branch);
     this.getBranchs();
-    this.branchSelect = ServerProvider.branchID;
+    this.branchSelect = InfoDevicePage.branch;
   }
 
   getBranchs(){
@@ -44,11 +44,9 @@ export class OrderAdminPage {
     var branchId = branch;
     var body = { "branchId" : branchId };
     this.provider.getOrdersByBranchId(body).then(res => {
+      this.orders = [];
       if(res.status){
         this.orders = res.orders;
-      }
-      else{
-        this.orders = [];
       }
       console.log("ORDENES");
       console.log(this.orders);
@@ -85,6 +83,12 @@ export class OrderAdminPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderAdminPage');
+  }
+
+  getOrder(orderId){
+    this.provider.UpdateStatusOrder(orderId, "EN PROCESO").then(data => {
+      this.getOrdersByBranch(InfoDevicePage.branch);
+    });
   }
 
 }

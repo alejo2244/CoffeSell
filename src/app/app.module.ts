@@ -21,6 +21,7 @@ import { CreateUserPage } from '../pages/create-user/create-user';
 import { OrdersPage } from '../pages/orders/orders';
 import { OrderDetailPage } from '../pages/order-detail/order-detail';
 import { OrderAdminPage } from '../pages/order-admin/order-admin';
+import { InfoDevicePage }  from '../pages/info-device/info-device';
 
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -56,7 +57,8 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
     CategoriesPage,
     CreateCategoryPage,
     CategoryDetailPage,
-    TabsPage
+    TabsPage,
+    InfoDevicePage
   ],
   imports: [
     BrowserModule,
@@ -86,7 +88,8 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
     CategoriesPage,
     CreateCategoryPage,
     CategoryDetailPage,
-    TabsPage
+    TabsPage,
+    InfoDevicePage
   ],
   providers: [
     StatusBar,
