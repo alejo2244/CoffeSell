@@ -13,24 +13,24 @@
           </td>
           <td>
             <ion-title>
-              Detalle del Pedido
+              Pedido
             </ion-title>
           </td>
         </tr>
       </table>
       <ion-buttons end>
-        <button ion-button (click)="updateInfoDevice()" large color="light">
+        <button ion-button (click)="updateInfoDevice()" large color="white">
           <ion-icon name="settings"></ion-icon>
         </button>
       </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding style="background: #000;">
+<ion-content padding>
     <label>Sucursal: {{ branchLabel }}</label><br/>
     <label>Mesa: {{ board }}</label>
     <ion-item-group full>
-      <ion-item-divider color="light">Pedido {{ status }}
+      <ion-item-divider class="divider" color="light">Pedido {{ status }}
         <ion-icon *ngIf="orderId != '' && status == 'PENDIENTE'" item-right name="trash" (click)="deleteOrder()"></ion-icon>
       </ion-item-divider>
         <ion-item *ngFor="let product of products">

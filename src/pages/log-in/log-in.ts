@@ -22,7 +22,7 @@ import { CategoriesPage } from '../categories/categories';
 export class LogInPage {
 
   indexCount:number = 0;
-  src: any = "../../assests/imgs/Buttons/inicio.png";
+  src: any = "../../assests/imgs/Buttons/Login.png";
   session:boolean = false;
   user:any = {userName: "", password:""};
   constructor(public provider:ServerProvider,
@@ -60,7 +60,7 @@ export class LogInPage {
           if(this.session)
           {
             console.log("ServerProvider.userId: " + ServerProvider.userId);
-            this.provider.createSession(ServerProvider.oneSignalId, user._id, user.rol);
+            this.provider.createSession(ServerProvider.oneSignalId, user._id, user.rol, user.branchId);
           }
 
           this.indexCount = 1;

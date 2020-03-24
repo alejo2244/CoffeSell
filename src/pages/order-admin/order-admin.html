@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Gestionar Pedidos</ion-title>
+    <ion-title>Pedidos</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -28,7 +28,7 @@
           <p>{{ producto.quantity }}</p>
           <p><strong>$</strong>{{ producto.price * producto.quantity }}</p>
         </ion-item>
-        <ion-item-divider color="light">Total: {{ loadTotal(ord) }}</ion-item-divider>
+        <ion-item-divider color="white">Total: {{ loadTotal(ord) }}</ion-item-divider>
       </ion-item-group>
     <ion-item-group *ngIf="orders.length <= 0 || !orders">
         <ion-item>

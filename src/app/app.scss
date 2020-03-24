@@ -1,10 +1,17 @@
 // http://ionicframework.com/docs/theming/
 
 ion-content {
-    // background-image: url("../assets/imgs/fondoRealNoFake.jpg");
-    // background-position: center center;
     background-size: cover;
   }
+ 
+@font-face {
+  font-family: 'Pompiere-Regular';
+  src: url("../assets/fonts/Pompiere-Regular.otf") format("opentype");
+}
+
+*{
+  font-family: 'Pompiere-Regular';
+}
 
 ion-header {
     background-image: url("../assets/imgs/fondoRealNoFake.jpg");
@@ -13,17 +20,208 @@ ion-header {
   }
 
 ion-toolbar {
-  background-color: #ffffff00;
+  background-color: #23140b;
 }
 
   .item-content {
-    background-color:#000000;
+    background-color:#23140b;
   }
   .content-md{
+    background-color:#23140b;
+  }
+
+  .toolbar-background-md{
     background-color:#000000;
   }
 
-  
+  .divider{
+    background: rgba(0,0,0,1);
+    background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,1)), color-stop(1%, rgba(0,0,0,1)), color-stop(100%, rgba(92,53,31,1)));
+    background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+    background: -o-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#5c351f', GradientType=0 );
+    color: #fff;
+    font-size: 3rem;
+  }
+
+.toolbar-title-md {
+    padding: 0 12px;
+    font-size: 6rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.bar-button-md {
+  margin: 0 0.2rem;
+  padding: 0 5px;
+  border-radius: 2px;
+  height: 32px;
+  border: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  text-transform: initial;
+}
+
+.card-md {
+  margin: 10px;
+  border-radius: 13px;
+  width: calc(100% - 20px);
+  font-size: 1.4rem;
+  background: #000000;;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card-content-md {
+  padding: 13px 16px;
+  font-size: 1.4rem;
+  line-height: 1.5;
+
+  background: rgba(0,0,0,1);
+  background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,1)), color-stop(1%, rgba(0,0,0,1)), color-stop(100%, rgba(92,53,31,1)));
+  background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+  background: -o-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+  background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 1%, rgba(92,53,31,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#5c351f', GradientType=0 );  
+}
+
+.card-title-md {
+  display: block;
+  font-size: 3rem;
+  line-height: 1.2;
+  color: #FFFFFF;
+  margin: 2px 0;
+  padding: 8px 0;
+}
+
+.card-md p {
+  font-size: 2rem;
+  font-weight: normal;
+  line-height: 1.5;
+  color: #222;
+}
+
+.item-md {
+  border-bottom-width: 0px;
+  padding-left: 16px;
+  padding-right: 0;
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: normal;
+  text-transform: none;
+  color: #fff;
+  background-color: #000000;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ion-card img {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+}
+
+.item-divider-md {
+  padding-left: 0px;
+  font-size: 4rem;
+  color: #FFFFFF;
+}
+
+.item-divider-md .label-md {
+  margin: 5px 5px 5px 20px;
+}
+
+.badge-md {
+  border-radius: 10px;
+  border: 2px solid white;
+  background: rgba(0,0,0,1);
+  background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(92,53,31,1) 0%, rgba(0,0,0,1) 99%, rgba(0,0,0,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,1)), color-stop(0%, rgba(92,53,31,1)), color-stop(99%, rgba(0,0,0,1)), color-stop(100%, rgba(0,0,0,1)));
+  background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(92,53,31,1) 0%, rgba(0,0,0,1) 99%, rgba(0,0,0,1) 100%);
+  background: -o-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(92,53,31,1) 0%, rgba(0,0,0,1) 99%, rgba(0,0,0,1) 100%);
+  background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(92,53,31,1) 0%, rgba(0,0,0,1) 99%, rgba(0,0,0,1) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(92,53,31,1) 0%, rgba(0,0,0,1) 99%, rgba(0,0,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
+  color: white;
+  font-weight: bold;
+  font-size: 4rem;
+  padding: 10px;
+  margin-left: 5px;
+  line-height: 0;
+  width: 100%;
+  height: 35px;
+}
+
+ion-badge {
+  margin: 9px 8px 9px 0;
+  padding: 3px 8px;
+  text-align: center;
+  display: inline-block;
+  min-width: 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.tabs-md .tab-button {
+    min-height: 5.6rem;
+    font-weight: normal;
+    color: rgba(92,53,31,1);
+    padding: 0;
+}
+
+.tabs-md .tab-button-icon {
+  margin-top: 1px;
+  min-width: 30px;
+  font-size: 30px;
+  color: rgba(92,53,31,1);
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  -webkit-transform-origin: 50% 150%;
+  transform-origin: 50% 150%;
+}
+
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  color: #ffffff;
+  -webkit-transform: translate3d(0, -2px, 0);
+  transform: translate3d(0, -2px, 0);
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+  color: #ffffff;
+  padding: 0;
+}
+
+.tabs-md .tabbar {
+  background: #000000;
+}
+
+.item-md h2 {
+  margin: 2px 0;
+  font-size: 3rem;
+  font-weight: normal;
+}
+
+.item-md p {
+  margin: 0 0 2px;
+  overflow: inherit;
+  font-size: 2.4rem;
+  line-height: normal;
+  text-overflow: inherit;
+  color: #666;
+}
+
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These

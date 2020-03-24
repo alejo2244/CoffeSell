@@ -176,7 +176,8 @@ export class OrdersPage {
           {
             text: 'Guardar',
             handler: data => {
-              this.provider.CreateNotification(data.Titulo, data.Mensaje).then(res => {
+              let ids = [];
+              this.provider.CreateNotification(data.Titulo, data.Mensaje, ids).then(res => {
                 const toast = this.toast.create({
                   message: "NotifEnviadas: " + JSON.parse(JSON.stringify(res)).recipients,
                   duration: 3000,

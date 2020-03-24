@@ -57,11 +57,12 @@ export class ServerProvider {
     return this.executeService("post", "login", parameters, 0);
   }
 
-  createSession(oneSignalId, userId, rolId) {
+  createSession(oneSignalId, userId, rolId, branchId) {
     let parameters = {
       "oneSignalId": oneSignalId,
       "userId": userId,
-      "rolId": rolId
+      "rolId": rolId,
+      "branchId": branchId
     }
     return this.executeService("post", "sessions", parameters, 0);
   }
@@ -72,6 +73,10 @@ export class ServerProvider {
 
   getSession(userId) {
     return this.executeService("getP", "sessions", null, userId);
+  }
+
+  getSessionByBranch(branchId) {
+    return this.executeService("getP", "sessionsbybranch", null, branchId);
   }
 
   getInfoDevice(oneSignalId) {
@@ -259,10 +264,10 @@ export class ServerProvider {
 
   //-------------------- NOTIFICACIONES -----------------------//
   
-  CreateNotification(title, message) {
+  CreateNotification(title, message, ids) {
     let parameters = {
       "app_id": "d0435b6e-cf21-41b9-99ac-1664d6c187d6",
-      "include_player_ids": ["89082861-41ca-4427-b352-6ed9278f35ba"],
+      "include_player_ids": ids,
       "data": {"foo": "bar"},
       "headings" : { "en": title },
       "contents": {"en": message }

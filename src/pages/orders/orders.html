@@ -12,14 +12,14 @@
           <img src="../../assets/imgs/logo.png" width="80px" style="display:inline-block" height="80px">
         </td>
         <td>
-          <ion-title>Productos</ion-title>
+          <ion-title style="font-size: large;">Productos</ion-title>
         </td>
       </tr>
     </table>      
       <ion-buttons end>
         <button ion-button (click)="LogIn()">
           <ion-icon name="contact"></ion-icon>
-          &nbsp;Ingresar
+          &nbsp;Login
         </button>
       </ion-buttons>
   </ion-toolbar>
@@ -28,35 +28,44 @@
 <ion-content>
   <ion-list>
       <ion-item-group *ngFor="let prod of groupProducts" full>
-        <ion-item-divider class="divider">{{ prod.id | uppercase }}</ion-item-divider>
+        <ion-item-divider class="divider" style="border-bottom-width: 0px; ">{{ prod.id }}</ion-item-divider>
         <ion-grid>
             <ion-row nowrap class="forecast_container">
               <ion-col col-8 class="forecast_div" *ngFor="let product of prod.products">
                 <ion-card>
-                  <div (click)="itemSelected(product)">
+                  
                   <img [src]="getUrl(product.url)" />
+                  <ion-item>
+                    <b>$ {{ product.price }}</b>
+                    <table item-end>
+                      <tr>
+                        <td>
+                          <ion-badge style="margin: 9px 8px 9px 0;" item-end (click)="remove(product)">-</ion-badge>
+                        </td>
+                        <td style="width: 40px; text-align: center;">
+                          <div (click)="itemSelected(product)">
+                            1
+                          </div>
+                        </td>
+                        <td>
+                          <ion-badge item-end (click)="add(product)">+</ion-badge>
+                        </td>
+                      </tr>
+                    </table>
+                  </ion-item>
                   <ion-card-content>
-                    <ion-card-title color="light">
+                    <ion-card-title>
                       {{ product.name }}
                     </ion-card-title>
                     <p style="color: #FFFFFF">
                       {{ product.description }}
                     </p>
                   </ion-card-content>
-                  </div>
-                  <ion-item>
-                    <ion-icon name='logo-usd' item-start style="color: #00ff37"></ion-icon>
-                    {{ product.price }}
-                    <ion-badge item-end (click)="add(product)">+</ion-badge>
-                  </ion-item>
+                  
                 </ion-card>
               </ion-col>
             </ion-row>
           </ion-grid>
       </ion-item-group>
     </ion-list>
-    
-  <ion-fab bottom right>
-    <button ion-fab (click)="notification()"><ion-icon name="notifications"></ion-icon></button>
-  </ion-fab>
 </ion-content>

@@ -114,6 +114,27 @@ export class OrderDetailPage {
         this.provider.CreateOrder(orderData).then(res => {
           console.log(res);
           if(res.status == 200){
+            this.provider.getSessionByBranch(InfoDevicePage.branch).then(ret => {
+              var oneSignalIds = ret.data;
+              var message = "Se creo un pedido para la sucursal: " + InfoDevicePage.branchLabel + " y para la mesa: " + InfoDevicePage.board;
+              this.provider.CreateNotification("Se creo pedido!!", message, oneSignalIds).then(res => {
+                const toast = this.toast.create({
+                  message: "NotifEnviadas: " + JSON.parse(JSON.stringify(res)).recipients,
+                  duration: 3000,
+                  position: "top"
+                });
+                toast.present();
+              },
+              error => {
+                const toast = this.toast.create({
+                  message: JSON.stringify(error),
+                  duration: 3000
+                });
+                toast.present();
+              }); 
+
+            });
+
             this.cargarOrden();
           }
           else{

@@ -27,21 +27,21 @@
 <ion-content padding *ngIf="indexCount == 0">
 
   <div style="width: 100%; text-align: center;">
-    <ion-img class="imgLogin" src="../../assets/imgs/Buttons/inicio.png"></ion-img>
+    <ion-img class="imgLogin" src="../../assets/imgs/Buttons/Login.png"></ion-img>
   </div>
 
     <ion-item>
-        <ion-label floating>Usuario</ion-label>
-        <ion-input type="text" [(ngModel)]="user.userName"></ion-input>
+        <ion-label floating color="white">Usuario</ion-label>
+        <ion-input type="text" color="white" [(ngModel)]="user.userName"></ion-input>
       </ion-item>
     
       <ion-item>
-        <ion-label floating>Clave</ion-label>
-        <ion-input [(ngModel)]="user.password" [type]="passwordType" clearOnEdit="false"></ion-input>
+        <ion-label floating color="white">Clave</ion-label>
+        <ion-input [(ngModel)]="user.password" [type]="passwordType" color="white" clearOnEdit="false"></ion-input>
         <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
     </ion-item>
     <ion-item>
-      <ion-label>Mantener Sesión activa?</ion-label>
+      <ion-label>¿Mantener Sesión activa?</ion-label>
       <ion-checkbox [(ngModel)]="session" item-end color="dark" checked="true"></ion-checkbox>
     </ion-item>
 <br/>
@@ -49,28 +49,32 @@
 <br/>
 <br/>
     <button ion-button block (click)="LogIn()">
-        Ingresar
+        Login
       </button>
 </ion-content>
 <ion-content padding *ngIf="indexCount == 1">
   <table class="menu">
     <tr>
       <td>
-          <button id="btn_user" (click)="RedirectUsers()"></button>
-      </td>
-      <td>
-          <button id="btn_category" (click)="RedirectCategories()"></button> 
+        <button id="btn_order" (click)="RedirectOrders()"></button>
       </td>
     </tr>
     <tr>
-      <td colspan="2" align="center">
+      <td>
           <button id="btn_product" (click)="RedirectProduct()"></button>
       </td>
     </tr>
     <tr>
       <td>
-        <button id="btn_order" (click)="RedirectOrders()"></button>
+          <button id="btn_user" (click)="RedirectUsers()"></button>
       </td>
+    </tr>
+    <tr>
+      <td>
+          <button id="btn_category" (click)="RedirectCategories()"></button> 
+      </td>
+    </tr>
+    <tr>
       <td>
           <button id="btn_branch" (click)="RedirectBranchs()"></button> 
       </td>

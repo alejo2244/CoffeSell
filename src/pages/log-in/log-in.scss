@@ -1,10 +1,10 @@
 page-log-in{
-    background-color: #000000;
+    background-color: #23140b;
 }
 
 .menu {
     background-color: transparent;
-    height: 70%;
+    height: 100%;
     width: 100%;
 }
 .menu button{
@@ -27,22 +27,19 @@ page-log-in{
 //     align-items: center;
 // }
 #btn_user{
-    background-image: url("../../assets/imgs/Buttons/usuarios.png");
-   
+    background-image: url("../../assets/imgs/Buttons/btnUsuarios.png");
 }
 #btn_category{
-    background-image: url("../../assets/imgs/Buttons/categorias.png");
+    background-image: url("../../assets/imgs/Buttons/btnCategorias.png");
 }
 #btn_branch{
-    background-image: url("../../assets/imgs/Buttons/sucursales.png");
+    background-image: url("../../assets/imgs/Buttons/btnSedes.png");
 }
-#btn_product{    
-    width: 90%;
-    height: 170%;
-    background-image: url("../../assets/imgs/Buttons/products.png");
+#btn_product{
+    background-image: url("../../assets/imgs/Buttons/btnProductos.png");
 }
 #btn_order{
-    background-image: url("../../assets/imgs/Buttons/pedido.png");
+    background-image: url("../../assets/imgs/Buttons/btnPedidos.png");
 }
 
 .item.item-input {
