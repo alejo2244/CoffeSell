@@ -27,8 +27,8 @@
 </ion-header>
 
 <ion-content padding>
-    <label>Sucursal: {{ branchLabel }}</label><br/>
-    <label>Mesa: {{ board }}</label>
+    <label style="font-size: 25px;">Sucursal: {{ branchLabel }}</label><br/>
+    <label style="font-size: 25px;">Mesa: {{ board }}</label>
     <ion-item-group full>
       <ion-item-divider class="divider" color="light">Pedido {{ status }}
         <ion-icon *ngIf="orderId != '' && status == 'PENDIENTE'" item-right name="trash" (click)="deleteOrder()"></ion-icon>
@@ -37,11 +37,21 @@
             <ion-avatar item-start>
               <img [src]="getUrl(product.url)">
             </ion-avatar>
-          <h2>{{ product.name | uppercase }}</h2>
-          <p>{{ product.quantity }}</p>
+          <label style="font-size: 3rem;">{{ product.name }}</label>
           <p><strong>$</strong>{{ product.price * product.quantity }}</p>
-          <ion-badge item-end (click)="add(product)">+</ion-badge>
-          <ion-badge item-end (click)="remove(product)">-</ion-badge>
+          <table item-end>
+            <tr>
+              <td>
+                <ion-badge style="margin: 9px 8px 9px 0;" item-end (click)="remove(product)">-</ion-badge>
+              </td>
+              <td style="width: 40px; text-align: center;">
+                {{ product.quantity }}
+              </td>
+              <td>
+                <ion-badge item-end (click)="add(product)">+</ion-badge>
+              </td>
+            </tr>
+          </table>
         </ion-item>
         <ion-item *ngIf="products.length <= 0 || !products">
           No hay pedido creado.
@@ -50,6 +60,9 @@
     <ion-footer>
       <ion-toolbar *ngIf="enabledButton">
         <button ion-button full (click)="SendOrder()">{{textButton}} ${{ total }}</button>
+      </ion-toolbar>
+      <ion-toolbar *ngIf="!enabledButton">
+        <label full style="font-size: 25px;">Total: ${{ total }}</label>
       </ion-toolbar>
     </ion-footer>
 </ion-content>

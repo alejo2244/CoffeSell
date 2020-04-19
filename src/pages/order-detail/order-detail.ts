@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
+import { ViewController, LoadingController, NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { ServerProvider } from '../../providers/server/server';
 import { InfoDevicePage } from '../info-device/info-device';
 
@@ -21,14 +21,14 @@ export class OrderDetailPage {
   public branchLabel: string;
   public board: number;
   branchs: any = [];
-  status: string = "PENDIENTE - SIN ENVIAR";
+  status: string = "SIN ENVIAR";
   orderId: string = "";
   textButton: string = "ACEPTAR PEDIDO";
   hasOrder: boolean;
   enabledButton: boolean = true;
   products: any [] = [];
   total: number = 0;
-  constructor(public toast: ToastController, public modalCtrl:ModalController, public alertCtrl:AlertController, public provider: ServerProvider, public viewCtrl:ViewController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public toast: ToastController, public modalCtrl:ModalController, public alertCtrl:AlertController, public provider: ServerProvider, public viewCtrl:ViewController, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
     this.products = OrderDetailPage.order;
     console.log("order -> " + OrderDetailPage.order.length);
     this.loadInfoDevice();
@@ -82,6 +82,7 @@ export class OrderDetailPage {
     }
     else{
       this.enabledButton = true;
+      this.cargarOrden();
     }
   }
 
@@ -92,6 +93,10 @@ export class OrderDetailPage {
 
   SendOrder()
   {
+    const loader = this.loadingCtrl.create({
+      content: "Creando Orden..."
+    });
+    loader.present();
     if(InfoDevicePage.branch == "0" || InfoDevicePage.board == "0"){
       const alert = this.alertCtrl.create({
         title: 'Atención!',
@@ -124,6 +129,7 @@ export class OrderDetailPage {
                   position: "top"
                 });
                 toast.present();
+                loader.dismiss();
               },
               error => {
                 const toast = this.toast.create({
@@ -166,6 +172,9 @@ export class OrderDetailPage {
   }
 
   add(product){
+    if(!this.enabledButton){
+      return;
+    }
     console.log(product);
     var rem = this.products.find(prod => prod.name == product.name);
     rem.quantity = parseInt(rem.quantity) + 1;
@@ -177,6 +186,9 @@ export class OrderDetailPage {
   }
 
   remove(product){
+    if(!this.enabledButton){
+      return;
+    }
     console.log(product);
     var rem = this.products.find(prod => prod.name == product.name);
     rem.quantity = rem.quantity - 1;
@@ -236,9 +248,10 @@ export class OrderDetailPage {
                 this.products = [];
                 OrderDetailPage.order = [];
                 this.enabledButton = false;
-                this.status = "PENDIENTE - SIN ENVIAR";
+                this.status = "SIN ENVIAR";
                 this.textButton = "ACEPTAR PEDIDO";
                 this.orderId = "";
+                this.total = 0;
               }
             },
             error => {
@@ -256,6 +269,7 @@ export class OrderDetailPage {
   }
   private cargarOrden(){
     this.limpiarDatos();
+    console.log("CargarOrden");
     this.provider.getOrdersByStatus(InfoDevicePage.branch, InfoDevicePage.board, "PENDIENTE").then(resPend=>{
       console.log(resPend);
       if(resPend.length > 0){
@@ -263,38 +277,37 @@ export class OrderDetailPage {
         this.textButton = "ACTUALIZAR PEDIDO";
         this.status = resPend[0].status;
         this.orderId = resPend[0].orderId;
-        resPend[0].products.forEach(product => {
-          OrderDetailPage.order.push(product);
-          this.products = OrderDetailPage.order;
-          var tmp = 0;
-          this.products.forEach (function(numero){
-            tmp += numero.price * numero.quantity;
-          });
-          this.total = tmp;
-        });        
+        OrderDetailPage.order = resPend[0].products;
+        this.products = resPend[0].products;
+        var tmp = 0;
+        OrderDetailPage.order.forEach (function(numero){
+          tmp += numero.price * numero.quantity;
+        });
+        this.total = tmp;
         this.enabledButton = true;
       }
       else{
         this.orderId = "";
         this.provider.getOrdersByStatus(InfoDevicePage.branch, InfoDevicePage.board, "EN PROCESO").then(resProc=>{
           if(resProc.length > 0){
-            console.log(resProc);
+            console.log(resProc[0]);
             this.enabledButton = false;
-            this.status = resPend[0].status;
-            this.orderId = resPend[0].orderId;
-            resPend[0].products.forEach(product => {
-              OrderDetailPage.order.push(product);
-              this.products = OrderDetailPage.order;
-              var tmp = 0;
-              this.products.forEach (function(numero){
-                tmp += numero.price * numero.quantity;
-              });
-              this.total = tmp;
+            this.status = resProc[0].status;
+            this.orderId = resProc[0].orderId;
+            OrderDetailPage.order = resProc[0].products;
+            this.products = resProc[0].products;
+            var tmp = 0;
+            OrderDetailPage.order.forEach (function(numero){
+              tmp += numero.price * numero.quantity;
             });
-            this.enabledButton = true;
+            this.total = tmp;
+            this.enabledButton = false;
           }
           else{
             this.orderId = "";
+            if(this.products.length > 0){
+              return;
+            }
             OrderDetailPage.order = [];
             this.enabledButton = false;
           }
@@ -304,10 +317,13 @@ export class OrderDetailPage {
   }
   
   private limpiarDatos(){
+    if(this.products.length > 0){
+      return;
+    }
     this.products = [];
     OrderDetailPage.order = [];
     this.enabledButton = false;
-    this.status = "PENDIENTE - SIN ENVIAR";
+    this.status = "SIN ENVIAR";
     this.textButton = "ACEPTAR PEDIDO";
   }
 

@@ -91,4 +91,10 @@ export class OrderAdminPage {
     });
   }
 
+  closeOrder(orderId){
+    this.provider.UpdateStatusOrder(orderId, "ENTREGADA").then(data => {
+      this.getOrdersByBranch(InfoDevicePage.branch);
+    });
+  }
+
 }

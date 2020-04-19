@@ -12,23 +12,28 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-label stacked>Sucursal</ion-label>
-    <ion-select [(ngModel)]="branchSelect" (ionChange)="getOrdersByBranch($event)" okText="Aceptar" cancelText="Cancelar" full>
+    <label style="font-size: 3rem;">Sucursal</label>
+    <ion-select style="font-size: 3rem;" [(ngModel)]="branchSelect" (ionChange)="getOrdersByBranch($event)" okText="Aceptar" cancelText="Cancelar" full>
       <ion-option *ngFor="let branch of branchs" value="{{ branch.branchId }}">{{ branch.nameBranch }}</ion-option>
     </ion-select>
     <ion-item-group *ngFor="let ord of orders" full>
-        <ion-item-divider ion-item color="light" no-lines>Mesa: {{ ord.board }} <br /> Estado: {{ ord.status | uppercase }}
-            <ion-icon item-right name="hammer" (click)="getOrder(ord.orderId)"></ion-icon>
+        <ion-item-divider ion-item color="light" no-lines>
+          <label style="font-size: 3rem;">Mesa: {{ ord.board }}</label>
+          <br/>
+          <label style="font-size: 3rem;">Estado: {{ ord.status | uppercase }}</label>
+          <ion-icon *ngIf="ord.status == 'PENDIENTE'" item-right name="hammer" (click)="getOrder(ord.orderId)"></ion-icon>
+          <ion-icon *ngIf="ord.status == 'EN PROCESO'" item-right name="paper-plane" (click)="closeOrder(ord.orderId)"></ion-icon>
         </ion-item-divider>
           <ion-item *ngFor="let producto of ord.products">
             <ion-avatar item-start>
               <img [src]="getUrl(producto.url)">
             </ion-avatar>
-          <h2>{{ producto.name | uppercase }}</h2>
-          <p>{{ producto.quantity }}</p>
-          <p><strong>$</strong>{{ producto.price * producto.quantity }}</p>
+          <label style="font-size: 3rem;">{{ producto.name }}</label>
+          <p>Cantidad: {{ producto.quantity }}</p>
+          <p>Precio: <strong>$</strong>{{ producto.price * producto.quantity }}</p>
         </ion-item>
-        <ion-item-divider color="white">Total: {{ loadTotal(ord) }}</ion-item-divider>
+        <ion-item-divider color="white">
+          <label style="font-size: 3rem;">Total: {{ loadTotal(ord) }}</label></ion-item-divider>
       </ion-item-group>
     <ion-item-group *ngIf="orders.length <= 0 || !orders">
         <ion-item>

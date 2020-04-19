@@ -250,7 +250,7 @@ export class ServerProvider {
   }
 
   UpdateProductsOrder(orderId, products) {
-    return this.executeService("patch", "ordersProducts", products, orderId);
+    return this.executeService("patch", "orderProducts", products, orderId);
   }
 
   DeleteOrder(_id) {
