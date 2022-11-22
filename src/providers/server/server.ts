@@ -1,3 +1,5 @@
+//ionic cordova run android --target="Pixel_2_API_30"
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/do';
@@ -17,8 +19,8 @@ export class ServerProvider {
   public static logIn: any = 0;
   public static oneSignalId: any = "0";
   public static userId: any = "0";
-  //private static urlService: string = "http://localhost:8080/app/";
-  private static urlService: string = "https://coffeesell.herokuapp.com/app/";
+  private static urlService: string = "http://192.168.0.18:8081/app/";
+  //private static urlService: string = "https://coffeesell.herokuapp.com/app/";
   constructor(public http: HttpClient) {
     console.log('Hello ServerProvider Provider');
   }

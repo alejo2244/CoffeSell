@@ -49,6 +49,7 @@ export class LogInPage {
     var user;
     this.provider.LogIn(this.user.userName, this.user.password).then(res => {
       
+      console.log("res Login", res)
       user = res;      
       if(user != undefined)
       {
